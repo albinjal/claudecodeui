@@ -4,12 +4,12 @@
 </div>
 
 
-A desktop and mobile UI for [Claude Code](https://docs.anthropic.com/en/docs/claude-code), Anthropic's official CLI for AI-assisted coding. You can use it locally or remotely to view your active projects and sessions in claude code and make changes to them the same way you would do it in claude code CLI. This gives you a proper interface that works everywhere. 
+A desktop and mobile UI for [Claude Code](https://docs.anthropic.com/en/docs/claude-code), Anthropic's official CLI for AI-assisted coding. You can use it locally or remotely to view your active projects and sessions in claude code and make changes to them the same way you would do it in claude code CLI. This gives you a proper interface that works everywhere.
 
 ## Screenshots
 
 <div align="center">
-  
+
 <table>
 <tr>
 <td align="center">
@@ -33,11 +33,11 @@ A desktop and mobile UI for [Claude Code](https://docs.anthropic.com/en/docs/cla
 
 ## Features
 
-- **Responsive Design** - Works seamlessly across desktop, tablet, and mobile so you can also use Claude Code from mobile 
+- **Responsive Design** - Works seamlessly across desktop, tablet, and mobile so you can also use Claude Code from mobile
 - **Interactive Chat Interface** - Built-in chat interface for seamless communication with Claude Code
 - **Integrated Shell Terminal** - Direct access to Claude Code CLI through built-in shell functionality
 - **File Explorer** - Interactive file tree with syntax highlighting and live editing
-- **Git Explorer** - View, stage and commit your changes. You can also switch branches 
+- **Git Explorer** - View, stage and commit your changes. You can also switch branches
 - **Session Management** - Resume conversations, manage multiple sessions, and track history
 
 
@@ -78,6 +78,56 @@ The application will start at the port you specified in your .env
 5. **Open your browser:**
    - Development: `http://localhost:3001`
 
+## Deployment
+
+For production deployment, you have several options to get Claude Code UI running on a server. We'll focus on the easiest methods for new users.
+
+### Prerequisites for Production
+- A Linux server (e.g., Ubuntu) with SSH access
+- Node.js v20+ installed
+- PM2 installed globally: `npm install -g pm2`
+- (Optional) Nginx for reverse proxy
+- Claude Code CLI installed and configured on the server
+
+### Method 1: Using deploy.sh (Recommended for Servers)
+This script automates pulling updates, building, and starting the app with PM2.
+
+1. Clone the repo on your server:
+   ```bash
+   git clone https://github.com/siteboon/claudecodeui.git
+   cd claudecodeui
+   ```
+
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+3. Configure .env (see Quick Start)
+
+4. (Optional) Set up Nginx: Create a config file in /etc/nginx/sites-available/ with reverse proxy to port 3000, then enable it.
+
+5. Run the deployment script:
+   ```bash
+   chmod +x deploy.sh
+   ./deploy.sh
+   ```
+
+6. Access at http://your-server-ip:3000 (or your domain if using Nginx)
+
+**Tips**:
+- Run `./deploy.sh` for updates
+- Check logs: `pm2 logs claude-code-ui`
+- If no Nginx: App runs on port 3000 directly
+
+### Common Deployment Issues
+- **Port conflicts**: Change PORT in .env
+- **Firewall**: Open port 3000 (or 80/443 for Nginx)
+- **Permissions**: Run as non-root user with `sudo` if needed
+- **HTTPS**: Use Nginx with Let's Encrypt for SSL
+
+For local development, use the Quick Start instructions.
+
 ## Security & Tools Configuration
 
 **🔒 Important Notice**: All Claude Code tools are **disabled by default**. This prevents potentially harmful operations from running automatically.
@@ -110,7 +160,7 @@ The UI automatically discovers Claude Code projects from `~/.claude/projects/` a
 - **Smart Navigation** - Quick access to recent projects and sessions
 
 #### Chat Interface
-- **Use responsive chat or Claude Code CLI** - You can either use the adapted chat interface or use the shell button to connect to Claude Code CLI. 
+- **Use responsive chat or Claude Code CLI** - You can either use the adapted chat interface or use the shell button to connect to Claude Code CLI.
 - **Real-time Communication** - Stream responses from Claude with WebSocket connection
 - **Session Management** - Resume previous conversations or start fresh sessions
 - **Message History** - Complete conversation history with timestamps and metadata
